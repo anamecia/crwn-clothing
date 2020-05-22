@@ -6,6 +6,7 @@ import CostumButton from "../custom-button/custom-button.component";
 import { auth, createUserProfileDocument } from "../../firebase/firebase.utils";
 
 import "./sign-up.styles.scss";
+import { wait } from "@testing-library/react";
 
 class SignUp extends Component {
   state = {
@@ -15,7 +16,7 @@ class SignUp extends Component {
     confirmPassword: "",
   };
 
-  handleSubmit = async (e) => {
+  handleSubmit = async e => {
     e.preventDefault();
 
     const { displayName, email, password, confirmPassword } = this.state;
@@ -26,7 +27,7 @@ class SignUp extends Component {
     }
 
     try {
-      const { user } = auth.createUserWithEmailAndPassword(email, password);
+      const { user } = await auth.createUserWithEmailAndPassword(email, password);
 
       await createUserProfileDocument(user, { displayName });
 
